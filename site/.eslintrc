@@ -3,7 +3,7 @@
   "rules": {
     "import/no-default-export": "off",
     "react/jsx-props-no-spreading": "off",
-    "import/extensions": ["error", { "json": "always" }],
+    "import/extensions": ["error", { "json": "always", "js": "ignorePackages" }],
     "no-nested-ternary": "off",
     "no-var": "off",
     "@typescript-eslint/no-explicit-any": "off",

@@ -32,6 +32,7 @@ export function Hero() {
         <Box className={heroWrapper}>
           <Box className={modalWrapper}>
             <NextImage
+              alt="RainbowKit modal"
               height={MODAL_SIZE.height}
               src="/hero-modal.png"
               width={MODAL_SIZE.width}
@@ -39,6 +40,7 @@ export function Hero() {
           </Box>
           <Box className={compactModalWrapper}>
             <NextImage
+              alt="RainbowKit compact modal"
               height={MODAL_COMPACT_SIZE.height}
               src="/hero-compact.png"
               width={MODAL_COMPACT_SIZE.width}
@@ -46,6 +48,7 @@ export function Hero() {
           </Box>
           <Box className={phoneWrapper}>
             <NextImage
+              alt="RainbowKit mobile modal"
               height={PHONE_SIZE.height}
               src="/hero-iphone.png"
               width={PHONE_SIZE.width}
