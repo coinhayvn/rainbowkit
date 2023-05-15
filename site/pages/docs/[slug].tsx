@@ -40,6 +40,7 @@ export async function getStaticProps({ params }) {
   const doc = allDocs.find(doc => doc.slug === params.slug);
   const sectionName = docsRoutes.reduce((acc, curr) => {
     curr.pages.forEach(page =>
+      // eslint-disable-next-line no-param-reassign
       page.slug === params.slug ? (acc = curr.label) : null
     );
     return acc;

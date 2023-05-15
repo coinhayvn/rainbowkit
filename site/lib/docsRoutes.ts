@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import { Doc } from '.contentlayer/generated';
 
 type PartialDoc = Pick<Doc, 'title'> & Pick<Doc, 'slug'>;
@@ -49,6 +48,7 @@ export const docsRoutes: RouteProps[] = [
 ];
 
 export const allDocsRoutes: PartialDoc[] = docsRoutes.reduce((acc, curr) => {
+  // eslint-disable-next-line no-param-reassign
   acc = [...acc, ...curr.pages];
   return acc;
 }, []);

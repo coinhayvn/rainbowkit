@@ -165,7 +165,7 @@ function makeElementCool(
 
   const isTouchInteraction =
     'ontouchstart' in window ||
-    // @ts-expect-error
+    // @ts-expect-error msMaxTouchPoints is for IE 10
     navigator.msMaxTouchPoints;
 
   const tap = isTouchInteraction ? 'touchstart' : 'mousedown';
@@ -216,7 +216,7 @@ function makeElementCool(
     element.removeEventListener('mouseleave', disableAutoAddParticle);
 
     // Cancel animation loop once animations are done
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (animationFrame && particles.length === 0) {
         cancelAnimationFrame(animationFrame);
         clearInterval(interval);

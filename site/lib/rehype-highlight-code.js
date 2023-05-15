@@ -4,9 +4,9 @@
 import parseNumericRange from 'parse-numeric-range';
 import { visit } from 'unist-util-visit';
 import { toString as nodeToString } from 'hast-util-to-string';
-import { refractor } from 'refractor/lib/all.js';
-import { highlightLine } from './rehype-highlight-line.js';
-import { highlightWord } from './rehype-highlight-word.js';
+import { refractor } from 'refractor/lib/all';
+import { highlightLine } from './rehype-highlight-line';
+import { highlightWord } from './rehype-highlight-word';
 
 export const rehypeHighlightCode = () => {
   const visitor = (node, index, parentNode) => {

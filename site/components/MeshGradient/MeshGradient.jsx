@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 function lerpRGB(color1, color2, t) {
-  let color = [0, 0, 0];
+  const color = [0, 0, 0];
   color[0] = color1[0] + (color2[0] - color1[0]) * t;
   color[1] = color1[1] + (color2[1] - color1[1]) * t;
   color[2] = color1[2] + (color2[2] - color1[2]) * t;

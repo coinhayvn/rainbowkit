@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 
 // This allows eslint-config-rainbow to manage its own ESLint plugins as dependencies
 require('@rushstack/eslint-patch/modern-module-resolution');

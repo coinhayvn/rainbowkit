@@ -5,7 +5,7 @@ module.exports = Prism => {
   var LANGUAGE_REGEX = /diff-([\w-]+)/i;
   var HTML_TAG =
     /<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/gi;
-  //this will match a line plus the line break while ignoring the line breaks HTML tags may contain.
+  // this will match a line plus the line break while ignoring the line breaks HTML tags may contain.
   var HTML_LINE = RegExp(
     /(?:__|[^\r\n<])*(?:\r\n?|\n|(?:__|[^\r\n<])(?![^\r\n]))/.source.replace(
       /__/g,
@@ -21,7 +21,8 @@ module.exports = Prism => {
   Prism.hooks.add('before-sanity-check', function (env) {
     var lang = env.language;
     if (LANGUAGE_REGEX.test(lang) && !env.grammar) {
-      env.grammar = Prism.languages[lang] = Prism.languages['diff'];
+      Prism.languages[lang] = Prism.languages['diff'];
+      env.grammar = Prism.languages['diff'];
     }
   });
   Prism.hooks.add('before-tokenize', function (env) {
@@ -47,7 +48,7 @@ module.exports = Prism => {
     // one of the diff tokens without any nested tokens
     if (env.type in PREFIXES) {
       /** @type {string} */
-      var content = env.content.replace(HTML_TAG, ''); // remove all HTML tags
+      var content = env.content.replace(HTML_TAG, ''); // remove all HTML tags 
 
       /** @type {string} */
       var decoded = content.replace(/&lt;/g, '<').replace(/&amp;/g, '&');
