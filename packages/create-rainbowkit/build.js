@@ -3,8 +3,8 @@ import * as esbuild from 'esbuild';
 
 const isWatching = process.argv.includes('--watch');
 
-esbuild
-  .build({
+try {
+  const context = await esbuild.context({
     bundle: true,
     entryPoints: ['./src/cli.ts'],
     format: 'esm',
@@ -22,18 +22,21 @@ esbuild
         },
       },
     ],
-    watch: isWatching
-      ? {
-          onRebuild(error, result) {
-            if (error) console.error('watch build failed:', error);
-            else console.log('watch build succeeded:', result);
-          },
-        }
-      : undefined,
-  })
-  .then(() => {
-    if (isWatching) {
-      console.log('watching...');
-    }
-  })
-  .catch(() => process.exit(1));
+  });
+  
+  await context.rebuild();
+
+  if (isWatching) {
+    await context.watch({
+      onEnd(error, result) {
+        if (error) console.error('watch build failed:', error);
+        else console.log('watch build succeeded:', result);
+      },
+    });
+    console.log('watching...');
+  } else {
+    context.dispose();
+  }
+} catch (e) {
+  process.exit(1);
+}

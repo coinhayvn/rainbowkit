@@ -55,47 +55,50 @@ const baseBuildConfig = {
   splitting: true, // Required for tree shaking
 };
 
-const mainBuild = esbuild.build({
-  ...baseBuildConfig,
-  entryPoints: [
-    './src/index.ts',
+try {
+  const mainContext = await esbuild.context({
+    ...baseBuildConfig,
+    entryPoints: [
+      './src/index.ts',
+  
+      // esbuild needs these additional entry points in order to support tree shaking while also supporting CSS
+      ...(await getAllEntryPoints('src/themes')),
+  
+      // The build output is cleaner when bundling all components into a single chunk
+      // This is done assuming that consumers use most of the components in the package, which is a reasonable assumption for now
+      './src/components/index.ts',
+    ],
+    outdir: 'dist',
+  });
+  
+  await mainContext.rebuild();
 
-    // esbuild needs these additional entry points in order to support tree shaking while also supporting CSS
-    ...(await getAllEntryPoints('src/themes')),
+  const walletsContext = await esbuild.context({
+    ...baseBuildConfig,
+    entryPoints: await getAllEntryPoints('src/wallets/walletConnectors'),
+    outdir: 'dist/wallets/walletConnectors',
+  });
+  
+  await walletsContext.rebuild();
 
-    // The build output is cleaner when bundling all components into a single chunk
-    // This is done assuming that consumers use most of the components in the package, which is a reasonable assumption for now
-    './src/components/index.ts',
-  ],
-  outdir: 'dist',
-  watch: isWatching
-    ? {
-        onRebuild(error, result) {
-          if (error) console.error('main build failed:', error);
-          else console.log('main build succeeded:', result);
-        },
-      }
-    : undefined,
-});
-
-const walletsBuild = esbuild.build({
-  ...baseBuildConfig,
-  entryPoints: await getAllEntryPoints('src/wallets/walletConnectors'),
-  outdir: 'dist/wallets/walletConnectors',
-  watch: isWatching
-    ? {
-        onRebuild(error, result) {
-          if (error) console.error('wallets build failed:', error);
-          else console.log('wallets build succeeded:', result);
-        },
-      }
-    : undefined,
-});
-
-Promise.all([mainBuild, walletsBuild])
-  .then(() => {
-    if (isWatching) {
-      console.log('watching...');
-    }
-  })
-  .catch(() => process.exit(1));
+  if (isWatching) {
+    await mainContext.watch({
+      onEnd(error, result) {
+        if (error) console.error('main build failed:', error);
+        else console.log('main build succeeded:', result);
+      },
+    });
+    await walletsContext.watch({
+      onEnd(error, result) {
+        if (error) console.error('wallets build failed:', error);
+        else console.log('wallets build succeeded:', result);
+      },
+    });
+    console.log('watching...');
+  } else {
+    mainContext.dispose();
+    walletsContext.dispose();
+  }
+} catch(e) {
+  process.exit(1);
+}

@@ -30,6 +30,10 @@ function omitRootDependencies(packageName, dependencies) {
     // We're on an older version of eslint due to eslint-config-rainbow
     // so we need to allow multiple versions for now.
     'eslint',
+    // create-react-app is using an old version of eslint
+    '@typescript-eslint/eslint-plugin',
+    '@typescript-eslint/parser',
+    'eslint-plugin-jsx-a11y',
   ];
 
   Object.keys(dependencies).forEach(dep => {
