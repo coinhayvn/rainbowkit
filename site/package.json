@@ -37,8 +37,8 @@
     "viem": "~0.3.19"
   },
   "devDependencies": {
-    "contentlayer": "0.2.8",
-    "next-contentlayer": "0.2.8"
+    "contentlayer": "0.3.2",
+    "next-contentlayer": "0.3.2"
   },
   "peerDependencies": {
     "wagmi": "^1.0.1"
