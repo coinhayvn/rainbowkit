@@ -1,5 +1,5 @@
 import { Box } from 'components/Box/Box';
-import NextImage from "next/legacy/image";
+import NextImage from 'next/legacy/image';
 import React from 'react';
 import {
   compactModalWrapper,
@@ -36,6 +36,7 @@ export function Hero() {
               height={MODAL_SIZE.height}
               src="/hero-modal.png"
               width={MODAL_SIZE.width}
+              priority={true}
             />
           </Box>
           <Box className={compactModalWrapper}>
